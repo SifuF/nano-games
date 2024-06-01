@@ -11,6 +11,7 @@ extern const uint8_t width;
 extern const uint8_t height;
 extern const int buttonLeft;
 extern const int buttonRight;
+extern bool menu;
 
 struct Snake {
   struct Player {
@@ -57,6 +58,7 @@ struct Snake {
   void buildGameOver() {
     const char* text1 = "GAME OVER!";
     const char* text2 = "You scored";
+    const char* text3 = "Quit        Continue";
 
     int i = 0;
     while (text1[i] != '\0') {
@@ -76,6 +78,12 @@ struct Snake {
     }
     else {
       writeChar(length - 1 + '0', i + 5, 2);
+    }
+
+    i = 0;
+    while (text3[i] != '\0') {
+      writeChar(text3[i], i, 3);
+      ++i;
     }
   }
 
@@ -151,7 +159,11 @@ struct Snake {
     }
     else {
       buildGameOver();
-      if (digitalRead(buttonLeft) || digitalRead(buttonRight)) {
+      if (digitalRead(buttonLeft)) {
+        reset();
+        menu = true;
+      }
+      if (digitalRead(buttonRight)) {
         reset();
       }
     }

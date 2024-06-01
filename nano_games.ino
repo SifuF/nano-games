@@ -1,5 +1,9 @@
 #include <LiquidCrystal.h>
 #include "Snake.h"
+#include "Snow.h"
+
+#define GAME_SNAKE 0
+#define GAME_SNOW 1
 
 const int rs = 9;
 const int rw = 10;
@@ -16,6 +20,9 @@ char screen[width * height + 1];
 
 const int buttonLeft = 2;
 const int buttonRight = 3;
+
+bool menu = true;
+int game = GAME_SNAKE;
 
 void clearScreen() {
   lcd.clear();
@@ -46,6 +53,7 @@ void writeChar(char c, int x, int y) {
 }
 
 Snake snake;
+Snow snow;
 
 void setup() {
   screen[width * height] = '\0';
@@ -56,7 +64,46 @@ void setup() {
 
 void loop() {
   clearScreen();
-  snake.drawFrame();
+  if(menu) {
+    const char* text = "Choose game...";
+    const char* game1 = "1. Snake";
+    const char* game2 = "2. Snow";
+
+    int i = 0;
+    while (text[i] != '\0') {
+      writeChar(text[i], 3 + i, 0);
+      ++i;
+    }
+
+    i = 0;
+    while (game1[i] != '\0') {
+      writeChar(game1[i], i, 1);
+      ++i;
+    }
+    
+    i = 0;
+    while (game2[i] != '\0') {
+      writeChar(game2[i], i, 2);
+      ++i;
+    }
+
+    if(digitalRead(buttonLeft)) {
+      game = GAME_SNAKE;
+      menu = false;
+    }
+    if(digitalRead(buttonRight)) {
+      game = GAME_SNOW;
+      menu = false;
+    }
+  }
+  else {
+    if(game == GAME_SNAKE) {
+      snake.drawFrame();
+    }
+    else if(game == GAME_SNOW) {
+      snow.drawFrame();
+    }
+  }
   lcd.print(screen);
   delay(200);
 }
