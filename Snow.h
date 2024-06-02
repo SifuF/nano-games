@@ -7,8 +7,16 @@ extern const int buttonRight;
 extern bool menu;
 
 struct Snow {
-  char c = 33; //33 to 127;
+  char c;
+  
+  Snow() {
+    reset();
+  }
 
+  void reset() {
+    c = '*';
+  }
+  
   void drawFrame() {
     int particles = rand() % (width * height / 3);
     for (int i = 0; i < particles; ++i) {
@@ -22,6 +30,7 @@ struct Snow {
     }
 
     if(digitalRead(buttonLeft)) {
+        reset();
         menu = true;
     }
   }

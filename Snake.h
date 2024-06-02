@@ -2,11 +2,11 @@
 #define DIR_DOWN 1
 #define DIR_LEFT 2
 #define DIR_RIGHT 4
-
-#define MAX_LENGTH 15
+#define MAX_LENGTH 20
 
 void clearScreen();
 void writeChar(char c, int x, int y);
+void writeString(const char * c, int x, int y);
 extern const uint8_t width;
 extern const uint8_t height;
 extern const int buttonLeft;
@@ -56,35 +56,18 @@ struct Snake {
   }
 
   void buildGameOver() {
-    const char* text1 = "GAME OVER!";
-    const char* text2 = "You scored";
-    const char* text3 = "Quit        Continue";
+    writeString("GAME OVER!", 5, 1);
+    writeString("You scored", 4, 2);
 
-    int i = 0;
-    while (text1[i] != '\0') {
-      writeChar(text1[i], 5 + i, 1);
-      ++i;
-    }
-
-    i = 0;
-    while (text2[i] != '\0') {
-      writeChar(text2[i], 4 + i, 2);
-      ++i;
-    }
-
-    if(length/10) {
-      writeChar((length-1)/10 + '0', i + 5, 2);
-      writeChar((length-1)%10 + '0', i + 6, 2);
+    if((length-1)/10) {
+      writeChar((length-1)/10 + '0', width-5, 2);
+      writeChar((length-1)%10 + '0', width-4, 2);
     }
     else {
-      writeChar(length - 1 + '0', i + 5, 2);
+      writeChar(length - 1 + '0', width-5, 2);
     }
 
-    i = 0;
-    while (text3[i] != '\0') {
-      writeChar(text3[i], i, 3);
-      ++i;
-    }
+    writeString("Quit        Continue", 0, 3);
   }
 
   void boundsCheck() {

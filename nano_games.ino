@@ -24,6 +24,9 @@ const int buttonRight = 3;
 bool menu = true;
 int game = GAME_SNAKE;
 
+Snake snake;
+Snow snow;
+
 void clearScreen() {
   lcd.clear();
   memset(screen, ' ', width * height);
@@ -52,8 +55,13 @@ void writeChar(char c, int x, int y) {
   }
 }
 
-Snake snake;
-Snow snow;
+void writeString(const char* text, int x, int y) {
+  int i = 0;
+  while (text[i] != '\0') {
+    writeChar(text[i], x + i, y);
+    ++i;
+  }
+}
 
 void setup() {
   screen[width * height] = '\0';
@@ -64,43 +72,24 @@ void setup() {
 
 void loop() {
   clearScreen();
-  if(menu) {
-    const char* text = "Choose game...";
-    const char* game1 = "1. Snake";
-    const char* game2 = "2. Snow";
+  if (menu) {
+    writeString("Choose game...", 3, 0);
+    writeString("1. Snake", 0, 1);
+    writeString("2. Snow", 0, 2);
 
-    int i = 0;
-    while (text[i] != '\0') {
-      writeChar(text[i], 3 + i, 0);
-      ++i;
-    }
-
-    i = 0;
-    while (game1[i] != '\0') {
-      writeChar(game1[i], i, 1);
-      ++i;
-    }
-    
-    i = 0;
-    while (game2[i] != '\0') {
-      writeChar(game2[i], i, 2);
-      ++i;
-    }
-
-    if(digitalRead(buttonLeft)) {
+    if (digitalRead(buttonLeft)) {
       game = GAME_SNAKE;
       menu = false;
     }
-    if(digitalRead(buttonRight)) {
+    if (digitalRead(buttonRight)) {
       game = GAME_SNOW;
       menu = false;
     }
   }
   else {
-    if(game == GAME_SNAKE) {
+    if (game == GAME_SNAKE) {
       snake.drawFrame();
-    }
-    else if(game == GAME_SNOW) {
+    } else if (game == GAME_SNOW) {
       snow.drawFrame();
     }
   }
