@@ -101,21 +101,6 @@ struct Snake {
         player[length - 1 - i].y = player[length - 2 - i].y;
       }
 
-      switch (player[0].direction) {
-        case DIR_UP:
-          player[0].y--;
-          break;
-        case DIR_DOWN:
-          player[0].y++;
-          break;
-        case DIR_LEFT:
-          player[0].x--;
-          break;
-        default:
-          player[0].x++;
-          break;
-      }
-
       if (digitalRead(buttonRight)) {
         if (player[0].direction == DIR_LEFT || player[0].direction == DIR_RIGHT) {
           player[0].direction = DIR_UP;
@@ -130,6 +115,21 @@ struct Snake {
         } else if (player[0].direction == DIR_UP || player[0].direction == DIR_DOWN) {
           player[0].direction = DIR_LEFT;
         }
+      }
+
+      switch (player[0].direction) {
+        case DIR_UP:
+          player[0].y--;
+          break;
+        case DIR_DOWN:
+          player[0].y++;
+          break;
+        case DIR_LEFT:
+          player[0].x--;
+          break;
+        default:
+          player[0].x++;
+          break;
       }
 
       boundsCheck();

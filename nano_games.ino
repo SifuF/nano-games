@@ -86,12 +86,11 @@ void loop() {
       menu = false;
     }
   }
-  else {
-    if (game == GAME_SNAKE) {
-      snake.drawFrame();
-    } else if (game == GAME_SNOW) {
-      snow.drawFrame();
-    }
+  else if (game == GAME_SNAKE) {
+    snake.drawFrame();
+  }
+  else if (game == GAME_SNOW) {
+    snow.drawFrame();
   }
   lcd.print(screen);
   delay(200);
