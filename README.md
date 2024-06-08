@@ -4,7 +4,12 @@ Arduino nano based basic games console
 
 
 ### Circuit diagram:
-![circuit](circuit.png)
+![circuit](img/circuit.png)
 
 ### breadboard layout:
-![circuit](breadboard.jpg)
+![breadboard](img/breadboard.jpg)
+
+### stripboard build:
+![built](img/built.jpg)
+
+![snake](img/snake.gif)
